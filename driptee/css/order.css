@@ -1,0 +1,53 @@
+.order-container {
+    padding: 20px;
+    max-width: 500px;
+    margin: auto;
+}
+
+.cart-item-summary {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.summary-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-right: 15px;
+    border-radius: 5px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.place-order-btn {
+    width: 100%;
+    background: black;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: 900;
+    cursor: pointer;
+}
