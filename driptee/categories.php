@@ -77,7 +77,7 @@ require_once 'db.php';
             <a href="categories.php">Categories</a>
 
             <?php if(isset($_SESSION['user_id'])): ?>
-                <a href="order.php">My Orders</a>
+                <a href="order_history.php">My Orders</a>
 
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
                 <a href="admin_dashboard.php" style="color: #2ecc71; font-weight: 800;">

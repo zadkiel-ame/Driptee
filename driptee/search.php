@@ -1,6 +1,16 @@
 <?php
 require_once 'db.php';
 
+// Fetch user's wishlist ONCE into an array to prevent N+1 query performance issues
+$wishlist_array = [];
+if (isset($_SESSION['user_id'])) {
+    $u_id = intval($_SESSION['user_id']);
+    $w_res = $conn->query("SELECT product_id FROM wishlist WHERE user_id = $u_id");
+    while ($w_row = $w_res->fetch_assoc()) {
+        $wishlist_array[] = $w_row['product_id'];
+    }
+}
+
 $search_query = "";
 if (isset($_GET['q'])) {
     $search_query = mysqli_real_escape_string($conn, $_GET['q']);
@@ -56,12 +66,24 @@ $result = mysqli_query($conn, $query);
                 <p class="product-price">₱<?php echo number_format($row['price'], 0); ?></p>
             </div>
             
-            <form action="add_to_cart.php" method="POST" style="position: absolute; bottom: 15px; right: 15px;">
-                <input type="hidden" name="product_id" value="<?php echo $row['id']; ?>">
-                <button type="submit" class="buy-btn" style="background: #000; color: #fff; border: none; padding: 8px 12px; border-radius: 5px; font-weight: 800; cursor: pointer;">
-                    +
-                </button>
-            </form>
+            <div style="position: absolute; bottom: 15px; right: 15px; display: flex; gap: 5px;">
+                <form action="add_to_cart.php" method="POST" style="display: inline;">
+                    <input type="hidden" name="product_id" value="<?php echo $row['id']; ?>">
+                    <button type="submit" class="buy-btn" style="background: #000; color: #fff; border: none; padding: 8px 12px; border-radius: 5px; font-weight: 800; cursor: pointer;">
+                        +
+                    </button>
+                </form>
+                
+                <?php if(isset($_SESSION['user_id'])): ?>
+                <form action="add_to_wishlist.php" method="POST" style="display: inline;">
+                    <input type="hidden" name="product_id" value="<?php echo $row['id']; ?>">
+                    <button type="submit" class="wishlist-btn" style="background: #fff; color: #000; border: 1px solid #000; padding: 8px 12px; border-radius: 5px; font-weight: 800; cursor: pointer; font-size: 11px;">
+                        <?php echo in_array($row['id'], $wishlist_array) ? 'Remove Favorite' : 'Add Favorite'; ?>
+                    </button>
+                </form>
+                <?php endif; ?>
+            </div>
+
         </div>
         <?php endwhile; ?>
     <?php else: ?>
@@ -88,7 +110,8 @@ $result = mysqli_query($conn, $query);
             <a href="categories.php">Categories</a>
 
             <?php if(isset($_SESSION['user_id'])): ?>
-                <a href="order.php">My Orders</a>
+                <a href="wishlist.php" style="color: #e74c3c; font-weight: bold;">My Wishlist</a>
+                <a href="order_history.php">My Orders</a>
 
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
                 <a href="admin_dashboard.php" style="color: #2ecc71; font-weight: 800;">

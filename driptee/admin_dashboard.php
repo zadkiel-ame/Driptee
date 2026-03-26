@@ -11,7 +11,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
 
 $product_count = $conn->query("SELECT COUNT(*) as total FROM products")->fetch_assoc()['total'];
 $order_count = $conn->query("SELECT COUNT(*) as total FROM orders")->fetch_assoc()['total'];
-$total_sales = $conn->query("SELECT SUM(total_amount) as total FROM orders")->fetch_assoc()['total'] ?? 0;
+$total_sales = $conn->query("SELECT SUM(total_amount) as total FROM orders WHERE order_status != 'Cancelled'")->fetch_assoc()['total'] ?? 0;
 ?>
 
 <!DOCTYPE html>
@@ -54,8 +54,9 @@ $total_sales = $conn->query("SELECT SUM(total_amount) as total FROM orders")->fe
         </div>
 
         <div class="action-bar">
-            <a href="add_product.php" class="btn-admin">+ POST NEW ITEM</a>
+            <a href="admin_add_product.php" class="btn-admin">+ ADD NEW PRODUCT</a>
             <a href="admin_order.php" class="btn-admin btn-secondary">VIEW CUSTOMER ORDERS</a>
+            <a href="admin_reports.php" class="btn-admin" style="background: #2ecc71;">VIEW SALES REPORTS</a>
         </div>
 
         <div class="inventory-box">
