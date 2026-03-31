@@ -2,11 +2,11 @@ This is a our group's website output for 6DWEB
 
 Our website is a digital "ukay-ukay" or a thrift shop called Driptee.
 
-How to Run Driptee
-Clone this repository.
+**How to Run Driptee**
+1. Clone this repository.
 
-Open the folder in a terminal.
+2. Open the folder in a terminal.
 
-Run docker compose up -d.
+3. Run docker compose up -d.
 
-Access the site at http://localhost:8080.
+4. Access the site at http://localhost:8080.
