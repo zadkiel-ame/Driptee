@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-$host = "localhost";
+$host = "db";
 $user = "root"; 
 $pass = ""; 
 $db   = "driptee_db";

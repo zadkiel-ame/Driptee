@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - ./driptee:/var/www/html
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:10.4
+    environment:
+      - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD=yes 
+      - MARIADB_DATABASE=driptee_db
+    volumes:
+      - ./driptee/sql/driptee_db (finals).sql:/docker-entrypoint-initdb.d/init.sql
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
